@@ -31,7 +31,14 @@
 class ModbusinoSlave {
 public:
     ModbusinoSlave(uint8_t slave);
+#if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__)                      \
+    | defined(__AVR_ATtiny85__) | defined(__AVR_AT90Tiny26__)                  \
+    | defined(__AVR_ATtiny26__) | defined(__AVR_ATtiny84__)                    \
+    | defined(__AVR_ATtiny44__)
+    void setup();
+#else
     void setup(long baud);
+#endif
     int loop(uint16_t *tab_reg, uint16_t nb_reg);
 private:
     int _slave;

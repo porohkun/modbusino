@@ -61,10 +61,20 @@ ModbusinoSlave::ModbusinoSlave(uint8_t slave)
     }
 }
 
+#if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__)                      \
+    | defined(__AVR_ATtiny85__) | defined(__AVR_AT90Tiny26__)                  \
+    | defined(__AVR_ATtiny26__) | defined(__AVR_ATtiny84__)                    \
+    | defined(__AVR_ATtiny44__)
+void ModbusinoSlave::setup()
+{
+    Serial.begin(115200);
+}
+#else
 void ModbusinoSlave::setup(long baud)
 {
     Serial.begin(baud);
 }
+#endif
 
 static int check_integrity(uint8_t *msg, uint8_t msg_length)
 {
